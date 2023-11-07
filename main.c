@@ -38,27 +38,14 @@ void pakli_felszabadit(pakli* eleje);
 
 int main(){
     pakli *eleje = NULL;
-    for(int i=1; i<14; i++){
-        pakli *uj = letrehoz(i, "Pikk");
-        if (uj->ertek == 1)
-        printf("%s Ász\n", uj->szin);
-        else if (uj->ertek == 11)
-        printf("%s Jumbo\n", uj->szin);
-        else if (uj->ertek == 12)
-        printf("%s Dáma\n", uj->szin);
-        else if (uj->ertek == 13)
-        printf("%s Király\n", uj->szin);
-        else
-        printf("%s %d\n", uj->szin, uj->ertek);
-    }
-    for(int i=1; i<14; i++){
-        pakli *uj = letrehoz(i, "Kőr");
-    }
-    for(int i=1; i<14; i++){
-        pakli *uj = letrehoz(i, "Treff");
-    }
-    for(int i=1; i<14; i++){
-        pakli *uj = letrehoz(i, "Káró");
+    char szinek[4][6]= {"Pikk", "Kőr", "Káró", "Treff"};
+    char ertekek[13][7] = {"Ász", "Kettő", "Három", "Négy", "Öt", "Hat", "Hét", "Nyolc", "Kilenc", "Tíz", "Bubi", "Dáma", "Király"};
+    for(int i=0; i<4; i++){
+        for(int j=0; j<13; j++){
+            pakli *uj = letrehoz(j+1, szinek[i]);
+            uj->kov = eleje;
+            eleje = uj;
+        }
     }
     printf("Üdvözöllek a játékban!\nKészen állsz?\nHa igen, nyomd meg a [J] betűt és üss egy entert, ha meg nem, és el szeretnéd olvasni a játékszabályt, nyomd meg az [I] betűt, majd üss egy entert!\n");
     bool fut = true;
