@@ -3,49 +3,18 @@
 #include<stdbool.h>
 #include <time.h>
 #include "debugmalloc.h"
-//#include "fuggvenyek.h"
-
-typedef struct eredmenyek {
-    int nyert;
-    int vesztett;
-    int dontetlen;
-    }eredmenyek;
-
-typedef struct pakli {
-    int ertek;
-    char szin[6];
-    struct pakli *kov;
-    }pakli;
-
-/// @brief Pakli létrehozása
-/// @param ertek A kártya értéke
-/// @param szin A kártya színe
-/// @return Pointer a létrehozott kártyára
-pakli *letrehoz(int ertek, char szin[5]);
-
-/// @brief Eldönti egy állásról, hogy ki nyert
-/// @param eredmeny 
-/// @param jatekos A játékos kártyáinak összege
-/// @param oszto Az osztó kártyáinak összege
-void dontes(eredmenyek *eredmeny, int jatekos, int oszto);
-
-/// @brief Kiír egy szöveget a képernyőre 
-void kiiras(void);
-
-/// @brief Felszabadítja a pakli listát
-void pakli_felszabadit(pakli* eleje);
-
+#include "fuggvenyek.h"
 
 int main(){
     int tetek;
     int egyenleg;
     eredmenyek barmi = { 0, 0, 0 };
     pakli *eleje = NULL;
-    char szinek[4][6]= {"Pikk", "Kőr", "Káró", "Treff"};
-    char ertekek[13][7] = {"Ász", "Kettő", "Három", "Négy", "Öt", "Hat", "Hét", "Nyolc", "Kilenc", "Tíz", "Bubi", "Dáma", "Király"};
+    char szinek[4][10]= {"Pikk", "Kőr", "Káró", "Treff"};
+    int ertekek[13] = {2,3,4,5,6,7,8,9,10,11,12,13,14};
     for(int i=0; i<4; i++){
         for(int j=0; j<13; j++){
-            pakli *uj = letrehoz(j+1, szinek[i]);
+            pakli *uj = letrehoz(ertekek[j], szinek[i]);
             uj->kov = eleje;
             eleje = uj;
         }
@@ -64,6 +33,7 @@ int main(){
             case 'I':
                 FILE *fp;
                 fp = fopen("jatekszabaly.txt", "r");
+                //debugmalloc, hogyan nézem meg a hosszát txt fájlnak?
                 char c[500];
                 while(fgets(c, 500, fp) != NULL)
                     printf("%s", c);
@@ -103,7 +73,7 @@ int main(){
                 fclose(fp2);
                 fut1 = false;
                 }
-                if (egyenleg == 0)
+                if (egyenleg < 50)
                 {
                     printf("Nem lehet betölteni, mert az egyenleged 0 coin, de kipróbálhatod a Slotunkat, a NYEREK kuponkóddal kapsz 50 ingyen pörgetést ;)\n");
                     barmi.nyert = 0;
@@ -146,18 +116,65 @@ int main(){
             scanf("%d", &tetek);
             if(tetek>=50 && tetek <= egyenleg)
             {
-                
+                pakli *oszto = eleje;
+                pakli *jatekos = eleje;
+
+                pakli *oszto2 = eleje;
+                pakli *jatekos2 = eleje;
+
                 srand(time(NULL));           
                 int a = rand() % 52;
                 int b = rand() % 52;
-                dontes(&barmi, a, b);
+                int c = rand() % 52;
+                int d = rand() % 52;
+                
+                for(int i=0; i<b; i++)
+                    oszto = oszto->kov;
+                for(int i=0; i<a; i++)
+                    jatekos = jatekos->kov;
+                for(int i=0; i<c; i++)
+                    oszto2 = oszto2->kov;
+                for(int i=0; i<d; i++)
+                    jatekos2 = jatekos2->kov;
+                
+                char ertekbetuvel[10] = {'\0'};
+                char ertekbetuvel1[10] = {'\0'};
+                char ertekbetuvel2[10] = {'\0'};
+                char ertekbetuvel3[10] = {'\0'};
 
-                if (a > b)
+                erteke(oszto->ertek, ertekbetuvel);
+                erteke(jatekos->ertek, ertekbetuvel1);
+                erteke(oszto2->ertek, ertekbetuvel2);
+                erteke(jatekos2->ertek, ertekbetuvel3);
+
+                dontes(&barmi, jatekos->ertek, jatekos2->ertek, oszto->ertek, oszto2->ertek);
+                
+                if (oszto->ertek < 11)
+                    printf("Az osztó lapja: %s %d\n", oszto->szin, oszto->ertek);
+                else 
+                    printf("Az osztó lapja: %s %s\n", oszto->szin, ertekbetuvel);             
+
+                if (oszto2->ertek < 11)
+                    printf("Az osztó 2. lapja: %s %d\n", oszto2->szin, oszto2->ertek);
+                else 
+                    printf("Az osztó 2. lapja: %s %s\n", oszto2->szin, ertekbetuvel2);
+                osszegoszto(oszto->ertek, oszto2->ertek);             
+                
+                if (jatekos->ertek < 11)
+                    printf("A játékos lapja: %s %d\n", jatekos->szin, jatekos->ertek);
+                else 
+                    printf("A játékos lapja: %s %s\n", jatekos->szin, ertekbetuvel1); 
+
+                if (jatekos2->ertek < 11)
+                    printf("A játékos 2. lapja: %s %d\n", jatekos2->szin, jatekos2->ertek);
+                else 
+                    printf("A játékos 2. lapja: %s %s\n", jatekos2->szin, ertekbetuvel3);
+                osszegjatekos(jatekos->ertek, jatekos2->ertek);
+
+                if (jatekos->ertek + jatekos2->ertek > oszto->ertek + oszto2->ertek)
                     egyenleg = egyenleg + tetek;
-                else if (a < b)
+                else if (jatekos->ertek + jatekos2->ertek < oszto->ertek + oszto2->ertek)
                     egyenleg = egyenleg - tetek;
-                else
-                    egyenleg = egyenleg;
                 
                 printf("\nNyert:%d Döntetlen:%d Vesztett:%d\nEgyenleg:%d\n\n", barmi.nyert, barmi.dontetlen, barmi.vesztett, egyenleg);
 
@@ -166,7 +183,7 @@ int main(){
             }
             else
                 printf("\nTúl kevés vagy túl sok tétet raktál meg! Nyomd meg újra a [K] betűt és üss egy entert!\n");
-            if (egyenleg == 0)
+            if (egyenleg < 50)
             {
                printf("\nSajnálom, de elvesztetted az egész egyenlegedet, így már nem tudsz tétet rakni, de kipróbálhatod a Slotunkat, a NYEREK kuponkóddal kapsz 50 ingyen pörgetést ;)\n\n");
               fut2 = false;
@@ -189,35 +206,4 @@ int main(){
         }
     }
     pakli_felszabadit(eleje);
-}
-void dontes(eredmenyek *eredmeny, int jatekos, int oszto){
-    if(jatekos>oszto)
-        ++eredmeny->nyert;
-    else if(jatekos<oszto)
-        ++eredmeny->vesztett;
-    else
-        ++eredmeny->dontetlen;      
-}
-
-void kiiras(void){
-    printf("\nHa új kört szeretnél kezdeni, nyomd meg a [K] betűt és nyomj egy entert!\nHa viszont nem és el szeretnéd menteni az eredményt, nyomd meg a [M] betűt és nyomj egy entert!\n");
-}
-
-void pakli_felszabadit(pakli* eleje)
-{
-    pakli* mozgo = eleje;
-    while(mozgo != NULL)
-    {
-        pakli* kov = mozgo->kov;
-        free(mozgo);
-        mozgo = kov;
-    }
-}
-
-pakli *letrehoz(int ertek, char szin[5]){
-    pakli *uj = (pakli*)malloc(sizeof(pakli));
-    uj->ertek = ertek;
-    strcpy(uj->szin, szin);
-    uj->kov = NULL;
-    return uj;
 }
