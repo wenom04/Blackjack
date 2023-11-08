@@ -183,10 +183,8 @@ int main(){
                 */
                 printf("\nHa szeretnél új lapot, akkor nyomd meg a [H] betűt és üss entert, ha viszont jók ezek a lapok neked, nyomd meg az [S] betűt és üss egy entert.\n");
                bool fusson = true;
-               bool nemeleg = true;
                while (fusson)
-                    { 
- 
+                {  
                         char valasz4;
                         scanf("%c", &valasz4);
                         switch(valasz4)
@@ -222,13 +220,14 @@ int main(){
                                 else 
                                     printf("Az osztó 2. lapja: %s %s\n", oszto2->szin, ertekbetuvel2);
 
-                                if(nemeleg)
+                                if(osszegoszto < 17)
                                 {
-                                    int e = rand () % 52;
                                     oszto3 = eleje;
+                                    int e = rand () % 52;
 
                                     for(int i = 0; i < e; i++)
                                         oszto3 = oszto3->kov;
+
                                     char ertekbetuvel4[10] = {'\0'};
                                     erteke(oszto3->ertek, ertekbetuvel4);   
                                     if (oszto3->ertek < 11)
@@ -237,18 +236,15 @@ int main(){
                                         printf("\nAz osztó következő lapja: %s %s\n", oszto3->szin, ertekbetuvel4); 
                                     osszegoszto = osszegoszto + tisztertek(oszto3->ertek);
                                 }
-
                                 else if(osszegoszto > 21)
                                 {
                                     printf("Az osztó kártyáinak összege meghaladta a 21-et, így te nyerted a kört!\n");
                                     osszegoszto = 0;
-                                    nemeleg = false;
                                     fusson = false;
                                 }
                                 else if(osszegoszto >= 17 && osszegoszto <= 21)
                                 {
                                     printf("Az összege: %d\n", osszegoszto);
-                                    nemeleg = false;
                                     fusson = false;
                                 }
                             break;
