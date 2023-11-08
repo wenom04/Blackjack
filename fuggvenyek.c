@@ -64,18 +64,15 @@ void erteke(int ertek, char *tomb){
         strcpy(tomb, "Ász");
 }
 
-void osszegoszto(int oszto, int oszto2){
-    if (oszto > 10 && oszto < 14) 
-        oszto = 10;
-    else if(oszto == 14)
-        oszto = 11;
-    if (oszto2 > 10 && oszto2 < 14) 
-        oszto2 = 10;
-    else if(oszto2 == 14)
-        oszto2 = 11;
-    printf("Összeg: %d\n", oszto + oszto2);
+int tisztertek(int tiszt){
+    if (tiszt > 10 && tiszt < 14) 
+        return 10;
+    else if(tiszt == 14)
+        return 11;
+    else
+        return tiszt;
 }
-
+/*
 void osszegjatekos(int jatekos, int jatekos2){
     if (jatekos > 10 && jatekos < 14) 
         jatekos = 10;
@@ -87,3 +84,4 @@ void osszegjatekos(int jatekos, int jatekos2){
         jatekos2 = 11;
     printf("Összeg: %d\n", jatekos + jatekos2);
 }
+*/

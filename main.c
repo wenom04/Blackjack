@@ -149,6 +149,9 @@ int main(){
 
                 dontes(&barmi, jatekos->ertek, jatekos2->ertek, oszto->ertek, oszto2->ertek);
                 
+                int osszegoszto = tisztertek(oszto->ertek) + tisztertek(oszto2->ertek);
+                int osszegjatekos = tisztertek(jatekos->ertek) + tisztertek(jatekos2->ertek);
+                
                 if (oszto->ertek < 11)
                     printf("Az osztó lapja: %s %d\n", oszto->szin, oszto->ertek);
                 else 
@@ -158,8 +161,8 @@ int main(){
                     printf("Az osztó 2. lapja: %s %d\n", oszto2->szin, oszto2->ertek);
                 else 
                     printf("Az osztó 2. lapja: %s %s\n", oszto2->szin, ertekbetuvel2);
-                osszegoszto(oszto->ertek, oszto2->ertek);             
-                
+                printf("Az összege: %d\n", osszegoszto);
+
                 if (jatekos->ertek < 11)
                     printf("A játékos lapja: %s %d\n", jatekos->szin, jatekos->ertek);
                 else 
@@ -169,11 +172,18 @@ int main(){
                     printf("A játékos 2. lapja: %s %d\n", jatekos2->szin, jatekos2->ertek);
                 else 
                     printf("A játékos 2. lapja: %s %s\n", jatekos2->szin, ertekbetuvel3);
-                osszegjatekos(jatekos->ertek, jatekos2->ertek);
-
+                printf("Az összege: %d\n", osszegjatekos);
+                /*
                 if (jatekos->ertek + jatekos2->ertek > oszto->ertek + oszto2->ertek)
                     egyenleg = egyenleg + tetek;
                 else if (jatekos->ertek + jatekos2->ertek < oszto->ertek + oszto2->ertek)
+                    egyenleg = egyenleg - tetek;
+                else
+                    egyenleg = egyenleg;
+                */
+                if (osszegjatekos > osszegoszto)
+                  egyenleg = egyenleg + tetek;
+                else if (osszegjatekos < osszegoszto)
                     egyenleg = egyenleg - tetek;
                 
                 printf("\nNyert:%d Döntetlen:%d Vesztett:%d\nEgyenleg:%d\n\n", barmi.nyert, barmi.dontetlen, barmi.vesztett, egyenleg);

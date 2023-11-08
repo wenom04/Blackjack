@@ -34,9 +34,7 @@ void pakli_felszabadit(pakli* eleje);
 
 void erteke(int ertek, char *tomb);
 
-void osszegoszto(int oszto, int oszto2);
-
-void osszegjatekos(int jatekos, int jatekos2);
+int tisztertek(int tiszt);
 
 #endif // FUGGVENYEK_H
 
