@@ -5,26 +5,10 @@
 #include "fuggvenyek.h"
 
 
-void dontes(eredmenyek *eredmeny, int jatekos, int jatekos2, int oszto, int oszto2 ){
-    if (jatekos > 10 && jatekos < 14) 
-        jatekos = 10;
-    else if(jatekos == 14)
-        jatekos = 11;
-    if (jatekos2 > 10 && jatekos2 < 14) 
-        jatekos2 = 10;
-    else if(jatekos2 == 14)
-        jatekos2 = 11;
-    if (oszto > 10 && oszto < 14) 
-        oszto = 10;
-    else if(oszto == 14)
-        oszto = 11;
-    if (oszto2 > 10 && oszto2 < 14) 
-        oszto2 = 10;
-    else if(oszto2 == 14)
-        oszto2 = 11;
-    if(jatekos + jatekos2 > oszto + oszto2)
+void dontes(eredmenyek *eredmeny, int osszegjatekos, int osszegoszto){
+    if(osszegjatekos > osszegoszto)
         ++eredmeny->nyert;
-    else if(jatekos + jatekos2 < oszto + oszto2)
+    else if(osszegjatekos < osszegoszto)
         ++eredmeny->vesztett;
     else
         ++eredmeny->dontetlen;      

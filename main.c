@@ -122,6 +122,8 @@ int main(){
                 pakli *oszto2 = eleje;
                 pakli *jatekos2 = eleje;
 
+                pakli *oszto3 = eleje;
+
                 srand(time(NULL));           
                 int a = rand() % 52;
                 int b = rand() % 52;
@@ -146,23 +148,21 @@ int main(){
                 erteke(jatekos->ertek, ertekbetuvel1);
                 erteke(oszto2->ertek, ertekbetuvel2);
                 erteke(jatekos2->ertek, ertekbetuvel3);
-
-                dontes(&barmi, jatekos->ertek, jatekos2->ertek, oszto->ertek, oszto2->ertek);
                 
                 int osszegoszto = tisztertek(oszto->ertek) + tisztertek(oszto2->ertek);
                 int osszegjatekos = tisztertek(jatekos->ertek) + tisztertek(jatekos2->ertek);
                 
                 if (oszto->ertek < 11)
-                    printf("Az osztó lapja: %s %d\n", oszto->szin, oszto->ertek);
+                    printf("\nAz osztó lapja: %s %d\n\n", oszto->szin, oszto->ertek);
                 else 
-                    printf("Az osztó lapja: %s %s\n", oszto->szin, ertekbetuvel);             
-
+                    printf("\nAz osztó lapja: %s %s\n\n", oszto->szin, ertekbetuvel);             
+                /*
                 if (oszto2->ertek < 11)
                     printf("Az osztó 2. lapja: %s %d\n", oszto2->szin, oszto2->ertek);
                 else 
                     printf("Az osztó 2. lapja: %s %s\n", oszto2->szin, ertekbetuvel2);
                 printf("Az összege: %d\n", osszegoszto);
-
+                */
                 if (jatekos->ertek < 11)
                     printf("A játékos lapja: %s %d\n", jatekos->szin, jatekos->ertek);
                 else 
@@ -172,7 +172,7 @@ int main(){
                     printf("A játékos 2. lapja: %s %d\n", jatekos2->szin, jatekos2->ertek);
                 else 
                     printf("A játékos 2. lapja: %s %s\n", jatekos2->szin, ertekbetuvel3);
-                printf("Az összege: %d\n", osszegjatekos);
+                printf("Az összege: %d\n\n", osszegjatekos);
                 /*
                 if (jatekos->ertek + jatekos2->ertek > oszto->ertek + oszto2->ertek)
                     egyenleg = egyenleg + tetek;
@@ -181,6 +181,85 @@ int main(){
                 else
                     egyenleg = egyenleg;
                 */
+                printf("\nHa szeretnél új lapot, akkor nyomd meg a [H] betűt és üss entert, ha viszont jók ezek a lapok neked, nyomd meg az [S] betűt és üss egy entert.\n");
+               bool fusson = true;
+               bool nemeleg = true;
+               while (fusson)
+                    { 
+ 
+                        char valasz4;
+                        scanf("%c", &valasz4);
+                        switch(valasz4)
+                        {
+                            case 'H':
+                            case 'h':
+
+                                jatekos = eleje;
+                                a = rand() % 52;               
+                                for(int i=0; i<a; i++)
+                                    jatekos = jatekos->kov;
+                                char ertekbetuvel1[10] = {'\0'};
+                                erteke(jatekos->ertek, ertekbetuvel1);   
+                                if (jatekos->ertek < 11)
+                                    printf("\nA játékos következő lapja: %s %d\n", jatekos->szin, jatekos->ertek);
+                                else 
+                                    printf("\nA játékos következő lapja: %s %s\n", jatekos->szin, ertekbetuvel1); 
+                                osszegjatekos = osszegjatekos + tisztertek(jatekos->ertek);
+                                printf("Összegük: %d\n\n", osszegjatekos);
+                                if (osszegjatekos > 21){
+                                    printf("Sajnos meghaladtad a 21-et, így elvesztetted a kört.\n");
+                                    osszegjatekos = 0;
+                                    fusson = false;
+                                }
+                                else
+                                    printf("Ha szeretnél új lapot, akkor nyomd meg a [H] betűt és üss entert, ha viszont jók ezek a lapok neked, nyomd meg az [S] betűt és üss egy entert.\n");
+                            break;
+                            case 'S':
+                            case 's':
+                                printf("Maradtak ezek a kártyaid. Összegük: %d\n", osszegjatekos);
+                                if (oszto2->ertek < 11)
+                                    printf("Az osztó 2. lapja: %s %d\n", oszto2->szin, oszto2->ertek);
+                                else 
+                                    printf("Az osztó 2. lapja: %s %s\n", oszto2->szin, ertekbetuvel2);
+
+                                if(nemeleg)
+                                {
+                                    int e = rand () % 52;
+                                    oszto3 = eleje;
+
+                                    for(int i = 0; i < e; i++)
+                                        oszto3 = oszto3->kov;
+                                    char ertekbetuvel4[10] = {'\0'};
+                                    erteke(oszto3->ertek, ertekbetuvel4);   
+                                    if (oszto3->ertek < 11)
+                                        printf("\nAz osztó következő lapja: %s %d\n", oszto3->szin, oszto3->ertek);
+                                    else
+                                        printf("\nAz osztó következő lapja: %s %s\n", oszto3->szin, ertekbetuvel4); 
+                                    osszegoszto = osszegoszto + tisztertek(oszto3->ertek);
+                                }
+
+                                else if(osszegoszto > 21)
+                                {
+                                    printf("Az osztó kártyáinak összege meghaladta a 21-et, így te nyerted a kört!\n");
+                                    osszegoszto = 0;
+                                    nemeleg = false;
+                                    fusson = false;
+                                }
+                                else if(osszegoszto >= 17 && osszegoszto <= 21)
+                                {
+                                    printf("Az összege: %d\n", osszegoszto);
+                                    nemeleg = false;
+                                    fusson = false;
+                                }
+                            break;
+                            case '\n':
+                            break;
+                            default: 
+                            printf("Nem jó karaktert ütöttél be!\n");
+                            break;
+                        }
+                    }
+                dontes(&barmi, osszegjatekos, osszegoszto);
                 if (osszegjatekos > osszegoszto)
                   egyenleg = egyenleg + tetek;
                 else if (osszegjatekos < osszegoszto)

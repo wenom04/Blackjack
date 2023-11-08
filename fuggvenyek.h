@@ -24,7 +24,7 @@ pakli *letrehoz(int ertek, char szin[10]);
 /// @param eredmeny 
 /// @param jatekos A játékos kártyáinak összege
 /// @param oszto Az osztó kártyáinak összege
-void dontes(eredmenyek *eredmeny, int jatekos, int jatekos2, int oszto, int oszto2);
+void dontes(eredmenyek *eredmeny, int osszegjatekos, int osszegoszto);
 
 /// @brief Kiír egy szöveget a képernyőre 
 void kiiras(void);
