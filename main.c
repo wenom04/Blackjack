@@ -185,8 +185,7 @@ int main(){
                bool fusson = true;
                bool nemeleg = true;
                while (fusson)
-                    { 
- 
+                {  
                         char valasz4;
                         scanf("%c", &valasz4);
                         switch(valasz4)
@@ -228,13 +227,15 @@ int main(){
                                     nemeleg = false;
                                     fusson = false;
                                 }
-                                if(nemeleg)
+                                
+                                while(nemeleg)
                                 {
-                                    int e = rand () % 52;
                                     oszto3 = eleje;
+                                    int e = rand () % 52;
 
                                     for(int i = 0; i < e; i++)
                                         oszto3 = oszto3->kov;
+
                                     char ertekbetuvel4[10] = {'\0'};
                                     erteke(oszto3->ertek, ertekbetuvel4);   
                                     if (oszto3->ertek < 11)
@@ -242,7 +243,9 @@ int main(){
                                     else
                                         printf("\nAz osztó következő lapja: %s %s\n", oszto3->szin, ertekbetuvel4); 
                                     osszegoszto = osszegoszto + tisztertek(oszto3->ertek);
-                                    if(osszegoszto >= 17){
+                            
+                                    if(osszegoszto >= 17)
+                                    {
                                         printf("Az összege: %d\n", osszegoszto);
                                         nemeleg = false;
                                     }
@@ -252,10 +255,8 @@ int main(){
                                 {
                                     printf("Az osztó kártyáinak összege meghaladta a 21-et, így te nyerted a kört!\n");
                                     osszegoszto = 0;
-                                    nemeleg = false;
                                     fusson = false;
                                 }
-
                             break;
                             case '\n':
                             break;
