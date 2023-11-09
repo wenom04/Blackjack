@@ -44,7 +44,7 @@ int main(){
             case 'j':
                 printf("\nA játék elkezdődött!\n");
                 printf("Visszaakarod állítani az előző állást? Ha igen, nyomd meg a [V] betűt és üss egy entert, ha nem, nyomd meg a [N] betűt és üss egy entert!\n");
-                fut=false;     
+                fut = false;     
             break;
             case '\n':
             break;
@@ -114,7 +114,7 @@ int main(){
             printf("\nA játék újra elkezdődött!\n");
             printf("Most rakd meg a tétedet. Figyelem! A tétnek minimum 50 coinnak kell lennie!\n");
             scanf("%d", &tetek);
-            if(tetek>=50 && tetek <= egyenleg)
+            if(tetek >= 50 && tetek <= egyenleg)
             {
                 pakli *oszto = eleje;
                 pakli *jatekos = eleje;
@@ -195,7 +195,7 @@ int main(){
 
                                 jatekos = eleje;
                                 a = rand() % 52;               
-                                for(int i=0; i<a; i++)
+                                for(int i = 0; i < a; i++)
                                     jatekos = jatekos->kov;
                                 char ertekbetuvel1[10] = {'\0'};
                                 erteke(jatekos->ertek, ertekbetuvel1);   
@@ -287,10 +287,10 @@ int main(){
         case 'M':
         case 'm':
             printf("A játék véget ért!\n");
-            FILE *fp2;
-            fp2 = fopen("eredmeny.txt", "w");
-            fprintf(fp2, "%d\n%d\n%d\n%d", barmi.nyert, barmi.dontetlen, barmi.vesztett, egyenleg);
-            fclose(fp2);
+            FILE *fp3;
+            fp3 = fopen("eredmeny.txt", "w");
+            fprintf(fp3, "%d\n%d\n%d\n%d", barmi.nyert, barmi.dontetlen, barmi.vesztett, egyenleg);
+            fclose(fp3);
             fut2 = false;
         break;
         case '\n':
