@@ -222,6 +222,12 @@ int main(){
                                 else 
                                     printf("Az osztó 2. lapja: %s %s\n", oszto2->szin, ertekbetuvel2);
 
+                                if(osszegoszto >= 17 && osszegoszto <= 21)
+                                {
+                                    printf("Az összege: %d\n", osszegoszto);
+                                    nemeleg = false;
+                                    fusson = false;
+                                }
                                 if(nemeleg)
                                 {
                                     int e = rand () % 52;
@@ -236,21 +242,20 @@ int main(){
                                     else
                                         printf("\nAz osztó következő lapja: %s %s\n", oszto3->szin, ertekbetuvel4); 
                                     osszegoszto = osszegoszto + tisztertek(oszto3->ertek);
+                                    if(osszegoszto >= 17){
+                                        printf("Az összege: %d\n", osszegoszto);
+                                        nemeleg = false;
+                                    }
                                 }
 
-                                else if(osszegoszto > 21)
+                                if(osszegoszto > 21)
                                 {
                                     printf("Az osztó kártyáinak összege meghaladta a 21-et, így te nyerted a kört!\n");
                                     osszegoszto = 0;
                                     nemeleg = false;
                                     fusson = false;
                                 }
-                                else if(osszegoszto >= 17 && osszegoszto <= 21)
-                                {
-                                    printf("Az összege: %d\n", osszegoszto);
-                                    nemeleg = false;
-                                    fusson = false;
-                                }
+
                             break;
                             case '\n':
                             break;
