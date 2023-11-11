@@ -4,11 +4,12 @@
 #include <time.h>
 #include "debugmalloc.h"
 #include "fuggvenyek.h"
+#include "fajlkezeles.h"
 
 int main(){
     int tetek;
     int egyenleg;
-    eredmenyek barmi = { 0, 0, 0 };
+    eredmenyek eredmeny = { 0, 0, 0 };
     pakli *eleje = NULL;
     char szinek[4][10]= {"Pikk", "Kőr", "Káró", "Treff"};
     int ertekek[13] = {2,3,4,5,6,7,8,9,10,11,12,13,14};
@@ -31,13 +32,7 @@ int main(){
         {
             case 'i':
             case 'I':
-                FILE *fp;
-                fp = fopen("jatekszabaly.txt", "r");
-                //debugmalloc, hogyan nézem meg a hosszát txt fájlnak?
-                char c[500];
-                while(fgets(c, 500, fp) != NULL)
-                    printf("%s", c);
-                fclose(fp);
+                jatekszabaly();
                 printf("\nMostmár mehet? Ha igen, nyomld le a [J] betűt és üss egy entert!\n");
             break;
             case 'J':
@@ -49,7 +44,7 @@ int main(){
             case '\n':
             break;
             default:
-                printf("Nem megfelelő karaktert adtál meg!\n");
+                nemmegfelelo();
             break;
         }
     }
@@ -66,36 +61,26 @@ int main(){
             case 'v':
                 if (vanegyenleg)
                 {
-                FILE *fp2;
-                fp2 = fopen("eredmeny.txt", "r");
-                fscanf(fp2, "%d\n%d\n%d\n%d", &barmi.nyert, &barmi.dontetlen, &barmi.vesztett, &egyenleg);
-                printf("A játék előző állása:\nNyert: %d\nDöntetlen: %d\nVesztett: %d\n", barmi.nyert, barmi.dontetlen, barmi.vesztett);
-                fclose(fp2);
+                    elozoallas(&eredmeny.nyert, &eredmeny.dontetlen, &eredmeny.vesztett, &egyenleg);
                 fut1 = false;
                 }
                 if (egyenleg < 50)
                 {
-                    printf("Nem lehet betölteni, mert az egyenleged 0 coin, de kipróbálhatod a Slotunkat, a NYEREK kuponkóddal kapsz 50 ingyen pörgetést ;)\n");
-                    barmi.nyert = 0;
-                    barmi.dontetlen = 0;
-                    barmi.vesztett = 0;
-                    egyenleg = 500;
+                    printf("Nem lehet betölteni, mert az egyenleged kevesebb, mint 50 coin, de kipróbálhatod a Slotunkat, a NYEREK kuponkóddal kapsz 50 ingyen pörgetést ;)\n");
+                    nullazas(&eredmeny.nyert, &eredmeny.dontetlen, &eredmeny.vesztett, &egyenleg);
                     vanegyenleg = false;
 
                 }
             break;
             case 'N':
             case 'n':
-                barmi.nyert = 0;
-                barmi.dontetlen = 0;
-                barmi.vesztett = 0;
-                egyenleg = 500;
+                nullazas(&eredmeny.nyert, &eredmeny.dontetlen, &eredmeny.vesztett, &egyenleg);
                 fut1 = false;                        
             break;
             case '\n':
             break;
             default:
-                printf("Nem megfelelő karaktert adtál meg!\n");
+                nemmegfelelo();
             break;
         }
     }
@@ -112,7 +97,7 @@ int main(){
         case 'K':
         case 'k':
             printf("\nA játék újra elkezdődött!\n");
-            printf("Most rakd meg a tétedet. Figyelem! A tétnek minimum 50 coinnak kell lennie!\n");
+            printf("Most rakd meg a tétedet. Figyelem! A tétnek minimum 50 coinnak kell lennie!\nAz egyenleged: %d\n", egyenleg);
             scanf("%d", &tetek);
             if(tetek >= 50 && tetek <= egyenleg)
             {
@@ -156,13 +141,6 @@ int main(){
                     printf("\nAz osztó lapja: %s %d\n\n", oszto->szin, oszto->ertek);
                 else 
                     printf("\nAz osztó lapja: %s %s\n\n", oszto->szin, ertekbetuvel);             
-                /*
-                if (oszto2->ertek < 11)
-                    printf("Az osztó 2. lapja: %s %d\n", oszto2->szin, oszto2->ertek);
-                else 
-                    printf("Az osztó 2. lapja: %s %s\n", oszto2->szin, ertekbetuvel2);
-                printf("Az összege: %d\n", osszegoszto);
-                */
                 if (jatekos->ertek < 11)
                     printf("A játékos lapja: %s %d\n", jatekos->szin, jatekos->ertek);
                 else 
@@ -173,14 +151,6 @@ int main(){
                 else 
                     printf("A játékos 2. lapja: %s %s\n", jatekos2->szin, ertekbetuvel3);
                 printf("Az összege: %d\n\n", osszegjatekos);
-                /*
-                if (jatekos->ertek + jatekos2->ertek > oszto->ertek + oszto2->ertek)
-                    egyenleg = egyenleg + tetek;
-                else if (jatekos->ertek + jatekos2->ertek < oszto->ertek + oszto2->ertek)
-                    egyenleg = egyenleg - tetek;
-                else
-                    egyenleg = egyenleg;
-                */
                 printf("\nHa szeretnél új lapot, akkor nyomd meg a [H] betűt és üss entert, ha viszont jók ezek a lapok neked, nyomd meg az [S] betűt és üss egy entert.\n");
                bool fusson = true;
                bool nemeleg = true;
@@ -256,22 +226,27 @@ int main(){
                                     printf("Az osztó kártyáinak összege meghaladta a 21-et, így te nyerted a kört!\n");
                                     osszegoszto = 0;
                                     fusson = false;
+                                }                                
+                                if(osszegoszto >= 17 && osszegoszto <= 21)
+                                {
+                                    nemeleg = false;
+                                    fusson = false;
                                 }
                             break;
                             case '\n':
                             break;
                             default: 
-                            printf("Nem jó karaktert ütöttél be!\n");
+                                nemmegfelelo();
                             break;
                         }
                     }
-                dontes(&barmi, osszegjatekos, osszegoszto);
+                dontes(&eredmeny, osszegjatekos, osszegoszto);
                 if (osszegjatekos > osszegoszto)
                   egyenleg = egyenleg + tetek;
                 else if (osszegjatekos < osszegoszto)
                     egyenleg = egyenleg - tetek;
                 
-                printf("\nNyert:%d Döntetlen:%d Vesztett:%d\nEgyenleg:%d\n\n", barmi.nyert, barmi.dontetlen, barmi.vesztett, egyenleg);
+                printf("\nNyert:%d Döntetlen:%d Vesztett:%d\nEgyenleg:%d\n\n", eredmeny.nyert, eredmeny.dontetlen, eredmeny.vesztett, egyenleg);
 
                 tetek = 0;
                 kiiras();
@@ -286,17 +261,13 @@ int main(){
         break;
         case 'M':
         case 'm':
-            printf("A játék véget ért!\n");
-            FILE *fp3;
-            fp3 = fopen("eredmeny.txt", "w");
-            fprintf(fp3, "%d\n%d\n%d\n%d", barmi.nyert, barmi.dontetlen, barmi.vesztett, egyenleg);
-            fclose(fp3);
+            mentes(eredmeny.nyert, eredmeny.dontetlen, eredmeny.vesztett, egyenleg);
             fut2 = false;
         break;
         case '\n':
         break;
         default:
-            printf("Nem megfelelő karaktert adtál meg!\n");
+            nemmegfelelo();
         break;
         }
     }

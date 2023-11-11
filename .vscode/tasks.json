@@ -12,7 +12,8 @@
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-Wall",
                 "-Werror",
-                "fuggvenyek.c"
+                "fuggvenyek.c",
+                "fajlkezeles.c"
             ],
             "options": {
                 "cwd": "${fileDirname}"

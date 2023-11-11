@@ -56,16 +56,14 @@ int tisztertek(int tiszt){
     else
         return tiszt;
 }
-/*
-void osszegjatekos(int jatekos, int jatekos2){
-    if (jatekos > 10 && jatekos < 14) 
-        jatekos = 10;
-    else if(jatekos == 14)
-        jatekos = 11;
-    if (jatekos2 > 10 && jatekos2 < 14) 
-        jatekos2 = 10;
-    else if(jatekos2 == 14)
-        jatekos2 = 11;
-    printf("Összeg: %d\n", jatekos + jatekos2);
+
+void nemmegfelelo(void){
+    printf("Nem megfelelő karaktert adtál meg!\n");
 }
-*/
+
+void nullazas(int* nyert, int *dontetlen, int *vesztett, int *egyenleg){
+    *nyert = 0;
+    *dontetlen = 0;
+    *vesztett = 0;
+    *egyenleg = 500;
+}
