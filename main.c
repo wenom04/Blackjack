@@ -164,6 +164,7 @@ int main(){
                 printf("\nHa szeretnél új lapot, akkor nyomd meg a [H] betűt és üss entert, ha viszont jók ezek a lapok neked, nyomd meg az [S] betűt és üss egy entert.\n");
                bool fusson = true;
                bool nemeleg = true;
+               int darab_kartya = 0;
                while (fusson)
                 {  
                         char valasz4;
@@ -174,7 +175,7 @@ int main(){
                             case 'h':
 
                                 jatekos = eleje;
-                                a = rand() % 52;               
+                                a = rand() % 52 - darab_kartya;               
                                 for(int i = 0; i < a; i++)
                                     jatekos = jatekos->kov;
                                 char ertekbetuvel1[10] = {'\0'};
@@ -187,6 +188,8 @@ int main(){
                                     printf("\nA játékos következő lapja: %s %s\n", jatekos->szin, ertekbetuvel1); 
                                 osszegjatekos = osszegjatekos + tisztertek(jatekos->ertek);
                                 printf("Összegük: %d\n\n", osszegjatekos);
+
+                                darab_kartya = darab_kartya + 1;
 
                                 if(osszegjatekos > 21 && jatekosvanasz ){
                                     osszegjatekos = osszegjatekos - 10;
@@ -206,7 +209,7 @@ int main(){
                             break;
                             case 'S':
                             case 's':
-                                printf("Maradtak ezek a kártyaid. Összegük: %d\n", osszegjatekos);
+                                printf("Maradtak ezek a kártyaid. Összegük: %d\n\n", osszegjatekos);
                                 if (oszto2->ertek < 11)
                                     printf("Az osztó 2. lapja: %s %d\n", oszto2->szin, oszto2->ertek);
                                 else 
@@ -222,7 +225,7 @@ int main(){
                                 while(nemeleg)
                                 {
                                     oszto3 = eleje;
-                                    int e = rand () % 52;
+                                    int e = rand () % 52 - darab_kartya;
 
                                     for(int i = 0; i < e; i++)
                                         oszto3 = oszto3->kov;
@@ -237,6 +240,8 @@ int main(){
                                     else
                                         printf("\nAz osztó következő lapja: %s %s\n", oszto3->szin, ertekbetuvel4); 
                                     osszegoszto = osszegoszto + tisztertek(oszto3->ertek);
+
+                                    darab_kartya = darab_kartya + 1;
 
                                     if(osszegoszto >= 17)
                                     {
