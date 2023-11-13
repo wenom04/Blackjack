@@ -32,7 +32,7 @@ void kiiras(void);
 /// @brief Felszabadítja a pakli listát
 void pakli_felszabadit(pakli* eleje);
 
-/// @brief Ha tisztről tiszt kártyát kap a játékos vagy az osztó, akkor függvény eldönti, hogy melyik tisztről van szó, ésnem egy számot ír ki, hanem a tiszt nevét 
+/// @brief Ha tiszt kártyát kap a játékos vagy az osztó, akkor a függvény eldönti, hogy melyik tisztről van szó, és nem egy számot ír ki, hanem a tiszt nevét 
 /// @param ertek A kártya értéke (11 v. 12 v. 13 v. 14)
 /// @param tomb A tömb, amelybe a függvény beírja a tiszt nevét
 void erteke(int ertek, char *tomb);
