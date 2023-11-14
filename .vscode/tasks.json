@@ -13,7 +13,8 @@
                 "-Wall",
                 "-Werror",
                 "fuggvenyek.c",
-                "fajlkezeles.c"
+                "fajlkezeles.c",
+                "pakli.c"
             ],
             "options": {
                 "cwd": "${fileDirname}"

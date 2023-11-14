@@ -6,35 +6,19 @@
 
 
 void dontes(eredmenyek *eredmeny, int osszegjatekos, int osszegoszto){
-    if(osszegjatekos > osszegoszto)
+    if(osszegjatekos > osszegoszto){
         ++eredmeny->nyert;
-    else if(osszegjatekos < osszegoszto)
+    }
+    else if(osszegjatekos < osszegoszto){
         ++eredmeny->vesztett;
-    else
-        ++eredmeny->dontetlen;      
+    }
+    else{
+        ++eredmeny->dontetlen;
+    }   
 }
 
 void kiiras(void){
     printf("\nHa új kört szeretnél kezdeni, nyomd meg a [K] betűt és nyomj egy entert!\nHa viszont nem és el szeretnéd menteni az eredményt, nyomd meg a [M] betűt és nyomj egy entert!\n");
-}
-
-void pakli_felszabadit(pakli* eleje)
-{
-    pakli* mozgo = eleje;
-    while(mozgo != NULL)
-    {
-        pakli* kov = mozgo->kov;
-        free(mozgo);
-        mozgo = kov;
-    }
-}
-
-pakli *letrehoz(int ertek, char szin[10]){
-    pakli *uj = (pakli*)malloc(sizeof(pakli));
-    uj->ertek = ertek;
-    strcpy(uj->szin, szin);
-    uj->kov = NULL;
-    return uj;
 }
 
 void erteke(int ertek, char *tomb){
