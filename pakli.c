@@ -86,7 +86,6 @@ kartya *paklitletrehoz()
 
 kartya *kartyaosztas(kartya *eleje)
 {
-    srand(time(NULL));
     int randSzam = rand() % 52;
 
     kartya *mozgo = eleje;

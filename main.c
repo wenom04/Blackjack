@@ -8,6 +8,7 @@
 #include "pakli.h"
 
 int main(){
+    srand(time(NULL));
     int tetek;
     int egyenleg;
     eredmenyek eredmeny = { 0, 0, 0 };
@@ -95,38 +96,51 @@ int main(){
             scanf("%d", &tetek);
             if(tetek >= 50 && tetek <= egyenleg)
             {
-                kartya *oszto = kartyaosztas(eleje);
-                kartya *jatekos = kartyaosztas(eleje);
-
-                kartya *oszto2 = kartyaosztas(eleje);
-                kartya *jatekos2 = kartyaosztas(eleje);
-
                 char ertekbetuvel[10] = {'\0'};
                 char ertekbetuvel1[10] = {'\0'};
                 char ertekbetuvel2[10] = {'\0'};
                 char ertekbetuvel3[10] = {'\0'};
 
+                kartya *oszto = kartyaosztas(eleje);
                 erteke(oszto->ertek, ertekbetuvel);
                 if (oszto->ertek == 14){
                     osztovanasz = true;
                 }
+                osztokartyakiirasa(oszto, ertekbetuvel, 1);
+                int osztoelso = tisztertek(oszto->ertek);
+                eleje = kartyatorlese(eleje, oszto);
+
+                kartya *jatekos = kartyaosztas(eleje);
                 erteke(jatekos->ertek, ertekbetuvel1);
                 if (jatekos->ertek == 14){
                     jatekosvanasz = true;
                 }
-                erteke(oszto2->ertek, ertekbetuvel2);
-                if (oszto2->ertek == 14){
-                    osztovanasz = true;
-                }
+                jatekoskartyakiirasa(jatekos, ertekbetuvel1, 1);
+                int jatekoselso = tisztertek(jatekos->ertek);
+                eleje = kartyatorlese(eleje, jatekos);
+
+                kartya *jatekos2 = kartyaosztas(eleje);
                 erteke(jatekos2->ertek, ertekbetuvel3);
                 if (jatekos2->ertek == 14){
                     jatekosvanasz = true;
                 }
+                jatekoskartyakiirasa(jatekos2, ertekbetuvel3, 2);
+                int jatekosmasodik = tisztertek(jatekos2->ertek);
+                eleje = kartyatorlese(eleje, jatekos2);
+
+                kartya *oszto2 = kartyaosztas(eleje);
+                erteke(oszto2->ertek, ertekbetuvel2);
+                if (oszto2->ertek == 14){
+                    osztovanasz = true;
+                }
+                int osztomasodik = tisztertek(oszto2->ertek);
+                char *oszto2szin = oszto2->szin;
+                eleje = kartyatorlese(eleje, oszto2);
 
                 kartya *oszto3 = eleje;
 
-                int osszegoszto = tisztertek(oszto->ertek) + tisztertek(oszto2->ertek);
-                int osszegjatekos = tisztertek(jatekos->ertek) + tisztertek(jatekos2->ertek);
+                int osszegoszto = osztoelso + osztomasodik;
+                int osszegjatekos = jatekoselso + jatekosmasodik;
 
                 if (jatekos->ertek == 14 && jatekos2->ertek == 14){
                     osszegjatekos = 12;
@@ -136,9 +150,9 @@ int main(){
                     osszegoszto = 12;
                 }
                 
-                osztokartyakiirasa(oszto, ertekbetuvel, 1);
+
                 jatekoskartyakiirasa(jatekos, ertekbetuvel1, 1);
-                jatekoskartyakiirasa(jatekos2, ertekbetuvel3, 2);
+
 
                 printf("Az összege: %d\n\n", osszegjatekos);
                 printf("\nHa szeretnél új lapot, akkor nyomd meg a [H] betűt és üss entert, ha viszont jók ezek a lapok neked, nyomd meg az [S] betűt és üss egy entert.\n");
@@ -193,9 +207,9 @@ int main(){
                             case 's':
                                 printf("Maradtak ezek a kártyaid. Összegük: %d\n\n", osszegjatekos);
                                 if (oszto2->ertek < 11)
-                                    printf("Az osztó 2. lapja: %s %d\n", oszto2->szin, oszto2->ertek);
+                                    printf("Az osztó 2. lapja: %s %d\n", oszto2szin, osztomasodik);
                                 else 
-                                    printf("Az osztó 2. lapja: %s %s\n", oszto2->szin, ertekbetuvel2);
+                                    printf("Az osztó 2. lapja: %s %s\n", oszto2szin, ertekbetuvel2);
 
                                 if(osszegoszto >= 17 && osszegoszto <= 21 )
                                 {
