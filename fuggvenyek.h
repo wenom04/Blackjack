@@ -7,11 +7,11 @@ typedef struct eredmenyek {
     int dontetlen;
     }eredmenyek;
 
-typedef struct pakli {
+typedef struct kartya {
     int ertek;
     char szin[10];
-    struct pakli *kov;
-    }pakli;
+    struct kartya *kov;
+    }kartya;
 
 /// @brief Eldönti egy állásról, hogy ki nyert
 /// @param eredmeny 

@@ -11,16 +11,8 @@ int main(){
     int tetek;
     int egyenleg;
     eredmenyek eredmeny = { 0, 0, 0 };
-    pakli *eleje = NULL;
-    char szinek[4][10]= {"Pikk", "Kőr", "Káró", "Treff"};
-    int ertekek[13] = {2,3,4,5,6,7,8,9,10,11,12,13,14};
-    for(int i=0; i<4; i++){
-        for(int j=0; j<13; j++){
-            pakli *uj = letrehoz(ertekek[j], szinek[i]);
-            uj->kov = eleje;
-            eleje = uj;
-        }
-    }
+    kartya *eleje = NULL;
+    eleje = paklitletrehoz();
     
     printf("Üdvözöllek a játékban!\nKészen állsz?\nHa igen, nyomd meg a [J] betűt és üss egy entert, ha meg nem, és el szeretnéd olvasni a játékszabályt, nyomd meg az [I] betűt, majd üss egy entert!\n");
     
@@ -103,13 +95,13 @@ int main(){
             scanf("%d", &tetek);
             if(tetek >= 50 && tetek <= egyenleg)
             {
-                pakli *oszto = eleje;
-                pakli *jatekos = eleje;
+                kartya *oszto = eleje;
+                kartya *jatekos = eleje;
 
-                pakli *oszto2 = eleje;
-                pakli *jatekos2 = eleje;
+                kartya *oszto2 = eleje;
+                kartya *jatekos2 = eleje;
 
-                pakli *oszto3 = eleje;
+                kartya *oszto3 = eleje;
 
                 srand(time(NULL));           
                 int a = rand() % 52;
@@ -135,25 +127,25 @@ int main(){
                 if (oszto->ertek == 14){
                     osztovanasz = true;
                 }
-                kartyatorlese(eleje, oszto->ertek, oszto->szin);
+                
 
                 erteke(jatekos->ertek, ertekbetuvel1);
                 if (jatekos->ertek == 14){
                     jatekosvanasz = true;
                 }
-                kartyatorlese(eleje, jatekos->ertek, jatekos->szin);
+                //kartyatorlese(eleje, jatekos);
 
                 erteke(oszto2->ertek, ertekbetuvel2);
                 if (oszto2->ertek == 14){
                     osztovanasz = true;
                 }
-                kartyatorlese(eleje, oszto2->ertek, oszto2->szin);
+                //kartyatorlese(eleje, oszto2);
 
                 erteke(jatekos2->ertek, ertekbetuvel3);
                 if (jatekos2->ertek == 14){
                     jatekosvanasz = true;
                 }
-                kartyatorlese(eleje, jatekos2->ertek, jatekos2->szin);
+                //kartyatorlese(eleje, jatekos2);
                 
                 int osszegoszto = tisztertek(oszto->ertek) + tisztertek(oszto2->ertek);
                 int osszegjatekos = tisztertek(jatekos->ertek) + tisztertek(jatekos2->ertek);
@@ -169,7 +161,8 @@ int main(){
                 if (oszto->ertek < 11)
                     printf("\nAz osztó lapja: %s %d\n\n", oszto->szin, oszto->ertek);
                 else 
-                    printf("\nAz osztó lapja: %s %s\n\n", oszto->szin, ertekbetuvel);             
+                    printf("\nAz osztó lapja: %s %s\n\n", oszto->szin, ertekbetuvel);
+                kartyatorlese(eleje, oszto);             
                 if (jatekos->ertek < 11)
                     printf("A játékos lapja: %s %d\n", jatekos->szin, jatekos->ertek);
                 else 

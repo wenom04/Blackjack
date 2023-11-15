@@ -21,6 +21,7 @@ void mentes(int nyert, int dontetlen, int vesztett, int egyenleg){
     fprintf(fp3, "%d\n%d\n%d\n%d", nyert, dontetlen, vesztett, egyenleg);
     fclose(fp3);
 }
+
 void elozoallas(int *nyert, int *dontetlen, int *vesztett, int *egyenleg){
     FILE *fp2;
     fp2 = fopen("eredmeny.txt", "r");
