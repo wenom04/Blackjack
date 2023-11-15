@@ -60,20 +60,4 @@ void nullazas(int *nyert, int *dontetlen, int *vesztett, int *egyenleg)
     *egyenleg = 500;
 }
 
-kartya *kartyaosztas(kartya *eleje, )
-{
-    srand(time(NULL));
-    int randSzam = rand() % 52;
 
-    kartya *mozgo = eleje;
-    for (int i = 0; i < randSzam; i++)
-        mozgo = mozgo->kov;
-
-    char ertekbetuvel[10] = {'\0'};
-
-    erteke(mozgo->ertek, ertekbetuvel);
-    if (mozgo->ertek == 14)
-    {
-        osztovanasz = true;
-    }
-}

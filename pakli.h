@@ -18,4 +18,10 @@ kartya *kartyatorlese(kartya *eleje, kartya *keresett);
 /// @return EGy 52 elemmel feltöltött pakli
 kartya* paklitletrehoz();
 
+kartya *kartyaosztas(kartya *eleje);
+
+void osztokartyakiirasa(kartya *mit, char *ertekbetuvel, int hanyadik);
+
+void jatekoskartyakiirasa(kartya *mit, char *ertekbetuvel, int hanyadik);
+
 #endif

@@ -43,7 +43,7 @@ int main(){
     }
 
     bool fut1 = true;
-    bool vanegyenleg = true;
+    //bool vanegyenleg = true;
     while(fut1)
     {
         char valasz3;
@@ -52,17 +52,17 @@ int main(){
         {
             case 'V':
             case 'v':
-                if (vanegyenleg)
-                {
-                    elozoallas(&eredmeny.nyert, &eredmeny.dontetlen, &eredmeny.vesztett, &egyenleg);
-                fut1 = false;
-                }
+                elozoallas(&eredmeny.nyert, &eredmeny.dontetlen, &eredmeny.vesztett, &egyenleg);
                 if (egyenleg < 50)
                 {
                     printf("Nem lehet betölteni, mert az egyenleged kevesebb, mint 50 coin, de kipróbálhatod a Slotunkat, a NYEREK kuponkóddal kapsz 50 ingyen pörgetést ;)\n");
                     nullazas(&eredmeny.nyert, &eredmeny.dontetlen, &eredmeny.vesztett, &egyenleg);
-                    vanegyenleg = false;
-
+                    fut1 = false;
+                }
+                else
+                {
+                    elozoallas(&eredmeny.nyert, &eredmeny.dontetlen, &eredmeny.vesztett, &egyenleg);
+                    fut1 = false;
                 }
             break;
             case 'N':
@@ -95,29 +95,12 @@ int main(){
             scanf("%d", &tetek);
             if(tetek >= 50 && tetek <= egyenleg)
             {
-                kartya *oszto = eleje;
-                kartya *jatekos = eleje;
+                kartya *oszto = kartyaosztas(eleje);
+                kartya *jatekos = kartyaosztas(eleje);
 
-                kartya *oszto2 = eleje;
-                kartya *jatekos2 = eleje;
+                kartya *oszto2 = kartyaosztas(eleje);
+                kartya *jatekos2 = kartyaosztas(eleje);
 
-                kartya *oszto3 = eleje;
-
-                srand(time(NULL));           
-                int a = rand() % 52;
-                int b = rand() % 52;
-                int c = rand() % 52;
-                int d = rand() % 52;
-                
-                for(int i=0; i<b; i++)
-                    oszto = oszto->kov;
-                for(int i=0; i<a; i++)
-                    jatekos = jatekos->kov;
-                for(int i=0; i<c; i++)
-                    oszto2 = oszto2->kov;
-                for(int i=0; i<d; i++)
-                    jatekos2 = jatekos2->kov;
-                
                 char ertekbetuvel[10] = {'\0'};
                 char ertekbetuvel1[10] = {'\0'};
                 char ertekbetuvel2[10] = {'\0'};
@@ -127,26 +110,21 @@ int main(){
                 if (oszto->ertek == 14){
                     osztovanasz = true;
                 }
-                
-
                 erteke(jatekos->ertek, ertekbetuvel1);
                 if (jatekos->ertek == 14){
                     jatekosvanasz = true;
                 }
-                //kartyatorlese(eleje, jatekos);
-
                 erteke(oszto2->ertek, ertekbetuvel2);
                 if (oszto2->ertek == 14){
                     osztovanasz = true;
                 }
-                //kartyatorlese(eleje, oszto2);
-
                 erteke(jatekos2->ertek, ertekbetuvel3);
                 if (jatekos2->ertek == 14){
                     jatekosvanasz = true;
                 }
-                //kartyatorlese(eleje, jatekos2);
-                
+
+                kartya *oszto3 = eleje;
+
                 int osszegoszto = tisztertek(oszto->ertek) + tisztertek(oszto2->ertek);
                 int osszegjatekos = tisztertek(jatekos->ertek) + tisztertek(jatekos2->ertek);
 
@@ -158,20 +136,10 @@ int main(){
                     osszegoszto = 12;
                 }
                 
-                if (oszto->ertek < 11)
-                    printf("\nAz osztó lapja: %s %d\n\n", oszto->szin, oszto->ertek);
-                else 
-                    printf("\nAz osztó lapja: %s %s\n\n", oszto->szin, ertekbetuvel);
-                kartyatorlese(eleje, oszto);             
-                if (jatekos->ertek < 11)
-                    printf("A játékos lapja: %s %d\n", jatekos->szin, jatekos->ertek);
-                else 
-                    printf("A játékos lapja: %s %s\n", jatekos->szin, ertekbetuvel1); 
+                osztokartyakiirasa(oszto, ertekbetuvel, 1);
+                jatekoskartyakiirasa(jatekos, ertekbetuvel1, 1);
+                jatekoskartyakiirasa(jatekos2, ertekbetuvel3, 2);
 
-                if (jatekos2->ertek < 11)
-                    printf("A játékos 2. lapja: %s %d\n", jatekos2->szin, jatekos2->ertek);
-                else 
-                    printf("A játékos 2. lapja: %s %s\n", jatekos2->szin, ertekbetuvel3);
                 printf("Az összege: %d\n\n", osszegjatekos);
                 printf("\nHa szeretnél új lapot, akkor nyomd meg a [H] betűt és üss entert, ha viszont jók ezek a lapok neked, nyomd meg az [S] betűt és üss egy entert.\n");
                bool fusson = true;
@@ -187,7 +155,7 @@ int main(){
                             case 'h':
 
                                 jatekos = eleje;
-                                a = rand() % 52 - darab_kartya;               
+                                int a = rand() % 52 - darab_kartya;               
                                 for(int i = 0; i < a; i++)
                                     jatekos = jatekos->kov;
                                 char ertekbetuvel1[10] = {'\0'};
