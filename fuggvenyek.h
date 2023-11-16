@@ -1,6 +1,8 @@
 #ifndef FUGGVENYEK_H
 #define FUGGVENYEK_H
 
+#include <stdbool.h>
+
 typedef struct eredmenyek {
     int nyert;
     int vesztett;
@@ -41,6 +43,12 @@ void nemmegfelelo();
 /// @param vesztett A struct vesztett változója
 /// @param egyenleg Az egyenleg változó
 void nullazas(int *nyert, int *dontetlen, int *vesztett, int *egyenleg);
+
+void korutaniszoveg(int osszegjatekos, int osszegoszto);
+
+void jatekkezdete(char valasz, bool *fut);
+
+void visszaallitas(char valasz, bool *fut, int *nyert, int *dontetlen, int *vesztett, int *egyenleg);
 
 #endif // FUGGVENYEK_H
 

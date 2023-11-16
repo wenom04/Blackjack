@@ -18,7 +18,7 @@ kartya *kartyatorlese(kartya *eleje, kartya *keresett);
 /// @return EGy 52 elemmel feltöltött pakli
 kartya* paklitletrehoz();
 
-kartya *kartyaosztas(kartya *eleje);
+kartya *kartyaosztas(kartya *eleje, int db);
 
 void osztokartyakiirasa(kartya *mit, char *ertekbetuvel, int hanyadik);
 

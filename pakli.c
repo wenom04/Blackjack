@@ -52,6 +52,8 @@ kartya *kartyatorlese(kartya *eleje, kartya *keresett)
                 return eleje;
             }
         }
+        elozo = torlendo;
+        torlendo = torlendo->kov;
     }
     return eleje;
 }
@@ -84,9 +86,10 @@ kartya *paklitletrehoz()
     return pakli;
 }
 
-kartya *kartyaosztas(kartya *eleje)
-{
-    int randSzam = rand() % 52;
+kartya *kartyaosztas(kartya *eleje, int db)
+{   
+    int maradekkartyak = 52 - db;
+    int randSzam = rand() % maradekkartyak;
 
     kartya *mozgo = eleje;
     for (int i = 0; i < randSzam; i++)

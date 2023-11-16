@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "debugmalloc.h"
 #include "fuggvenyek.h"
+#include "fajlkezeles.h"
 
 void dontes(eredmenyek *eredmeny, int osszegjatekos, int osszegoszto)
 {
@@ -60,4 +61,66 @@ void nullazas(int *nyert, int *dontetlen, int *vesztett, int *egyenleg)
     *egyenleg = 500;
 }
 
+void korutaniszoveg(int osszegjatekos, int osszegoszto)
+{
+    if (osszegjatekos != 0 && osszegoszto != 0 && osszegjatekos > osszegoszto)
+        printf("\nGratulálok, megnyerted a kört!\n");
+    else if (osszegjatekos != 0 && osszegoszto != 0 && osszegjatekos < osszegoszto)
+        printf("\nSajnálom, ezt a kört elvesztetted!\n");
+    else if (osszegjatekos != 0 && osszegoszto != 0)
+        printf("\nA kör döntetlennel zárult, de jobb, mintha veszítettél volna!\n");
+}
 
+void jatekkezdete(char valasz, bool *fut)
+{
+    switch (valasz)
+    {
+    case 'i':
+    case 'I':
+        jatekszabaly();
+        printf("\nMostmár mehet? Ha igen, nyomld le a [J] betűt és üss egy entert!\n");
+        break;
+    case 'J':
+    case 'j':
+        printf("\nA játék elkezdődött!\n");
+        printf("Visszaakarod állítani az előző állást? Ha igen, nyomd meg a [V] betűt és üss egy entert, ha nem, nyomd meg a [N] betűt és üss egy entert!\n");
+        *fut = false;
+        break;
+    case '\n':
+        break;
+    default:
+        nemmegfelelo();
+        break;
+    }
+}
+
+void visszaallitas(char valasz, bool *fut, int *nyert, int *dontetlen, int *vesztett, int *egyenleg)
+{
+    switch (valasz)
+    {
+    case 'V':
+    case 'v':
+        elozoallas(nyert, dontetlen, vesztett, egyenleg);
+        if (*egyenleg < 50)
+        {
+            printf("Nem lehet betölteni, mert az egyenleged kevesebb, mint 50 coin, de kipróbálhatod a Slotunkat, a NYEREK kuponkóddal kapsz 50 ingyen pörgetést ;)\n");
+            nullazas(nyert, dontetlen, vesztett, egyenleg);
+            *fut = false;
+        }
+        else
+        {
+            *fut = false;
+        }
+        break;
+    case 'N':
+    case 'n':
+        nullazas(nyert, dontetlen, vesztett, egyenleg);
+        *fut = false;
+        break;
+    case '\n':
+        break;
+    default:
+        nemmegfelelo();
+        break;
+    }
+}
