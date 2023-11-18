@@ -1,0 +1,15 @@
+                            for (int i = 0; i < e; i++)
+                                oszto3 = oszto3->kov;
+
+                            if (oszto3->ertek == 14)
+                            {
+                                osztovanasz = true;
+                            }
+
+                            char ertekbetuvel4[10] = {'\0'};
+                            erteke(oszto3->ertek, ertekbetuvel4);
+                            if (oszto3->ertek < 11)
+                                printf("\nAz osztó következő lapja: %s %d\n", oszto3->szin, oszto3->ertek);
+                            else
+                                printf("\nAz osztó következő lapja: %s %s\n", oszto3->szin, ertekbetuvel4);
+                            osszegoszto = osszegoszto + tisztertek(oszto3->ertek);

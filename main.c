@@ -14,7 +14,6 @@ int main()
     int egyenleg;
     eredmenyek eredmeny = {0, 0, 0};
     kartya *eleje = NULL;
-    eleje = paklitletrehoz();
 
     printf("Üdvözöllek a játékban!\nKészen állsz?\nHa igen, nyomd meg a [J] betűt és üss egy entert, ha meg nem, és el szeretnéd olvasni a játékszabályt, nyomd meg az [I] betűt, majd üss egy entert!\n");
 
@@ -27,25 +26,28 @@ int main()
     }
 
     bool fut1 = true;
+    bool visszaallitva = false;
     while (fut1)
     {
         char valasz2;
         scanf("%c", &valasz2);
-        visszaallitas(valasz2, &fut1, &eredmeny.nyert, &eredmeny.dontetlen, &eredmeny.vesztett, &egyenleg);
+        visszaallitva = visszaallitas(valasz2, &fut1, &eredmeny.nyert, &eredmeny.dontetlen, &eredmeny.vesztett, &egyenleg);
     }
 
-    kiiras();
+    if (!visszaallitva) kiiras();
     bool fut2 = true;
     bool osztovanasz = false;
     bool jatekosvanasz = false;
     while (fut2)
     {
-        char valasz2;
-        scanf("%c", &valasz2);
+        char valasz2 = visszaallitva ? 'k' : '_';
+        if (!visszaallitva) scanf("%c", &valasz2);
+        visszaallitva = false;
         switch (valasz2)
         {
         case 'K':
         case 'k':
+            eleje = paklitletrehoz();
             printf("\nA játék újra elkezdődött!\n");
             printf("Most rakd meg a tétedet. Figyelem! A tétnek minimum 50 coinnak kell lennie!\nAz egyenleged: %d\n", egyenleg);
             scanf("%d", &tetek);
@@ -186,27 +188,19 @@ int main()
                         }
 
                         while (nemeleg)
-                        {
-                            oszto3 = eleje;
-                            int e = rand() % 52 - darab_kartya;
-
-                            for (int i = 0; i < e; i++)
-                                oszto3 = oszto3->kov;
-
+                        {         
+                            char ertekbetuvel4[10] = {'\0'};
+                            oszto3 = kartyaosztas(eleje, darab_kartya);
+                            erteke(oszto3->ertek, ertekbetuvel4);
                             if (oszto3->ertek == 14)
                             {
                                 osztovanasz = true;
                             }
-
-                            char ertekbetuvel4[10] = {'\0'};
-                            erteke(oszto3->ertek, ertekbetuvel4);
-                            if (oszto3->ertek < 11)
-                                printf("\nAz osztó következő lapja: %s %d\n", oszto3->szin, oszto3->ertek);
-                            else
-                                printf("\nAz osztó következő lapja: %s %s\n", oszto3->szin, ertekbetuvel4);
-                            osszegoszto = osszegoszto + tisztertek(oszto3->ertek);
-
+                            osztokartyakiirasa(oszto3, ertekbetuvel4, daraboszto);
+                            osszegoszto = osszegoszto + tisztertek(oszto3->ertek);            
+                            daraboszto = daraboszto + 1;
                             darab_kartya = darab_kartya + 1;
+                            eleje = kartyatorlese(eleje, oszto3);
 
                             if (osszegoszto > 21 && osztovanasz)
                             {
@@ -262,7 +256,6 @@ int main()
                 printf("\nSajnálom, de elvesztetted az egész egyenlegedet, így már nem tudsz tétet rakni, de kipróbálhatod a Slotunkat, a NYEREK kuponkóddal kapsz 50 ingyen pörgetést ;)\n\n");
                 fut2 = false;
             }
-            eleje = paklitletrehoz();
             break;
         case 'M':
         case 'm':

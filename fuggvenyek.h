@@ -48,7 +48,7 @@ void korutaniszoveg(int osszegjatekos, int osszegoszto);
 
 void jatekkezdete(char valasz, bool *fut);
 
-void visszaallitas(char valasz, bool *fut, int *nyert, int *dontetlen, int *vesztett, int *egyenleg);
+bool visszaallitas(char valasz, bool *fut, int *nyert, int *dontetlen, int *vesztett, int *egyenleg);
 
 #endif // FUGGVENYEK_H
 

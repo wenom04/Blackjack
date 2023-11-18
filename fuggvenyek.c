@@ -94,7 +94,7 @@ void jatekkezdete(char valasz, bool *fut)
     }
 }
 
-void visszaallitas(char valasz, bool *fut, int *nyert, int *dontetlen, int *vesztett, int *egyenleg)
+bool visszaallitas(char valasz, bool *fut, int *nyert, int *dontetlen, int *vesztett, int *egyenleg)
 {
     switch (valasz)
     {
@@ -111,16 +111,17 @@ void visszaallitas(char valasz, bool *fut, int *nyert, int *dontetlen, int *vesz
         {
             *fut = false;
         }
-        break;
+        return true;
     case 'N':
     case 'n':
         nullazas(nyert, dontetlen, vesztett, egyenleg);
         *fut = false;
-        break;
+        return true;
     case '\n':
         break;
     default:
         nemmegfelelo();
         break;
     }
+    return false;
 }
