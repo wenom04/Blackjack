@@ -117,12 +117,12 @@ int main()
                 int osszegoszto = osztoelso + osztomasodik;
                 int osszegjatekos = jatekoselso + jatekosmasodik;
 
-                if (jatekoselso == 14 && jatekosmasodik == 14)
+                if (jatekoselso == 11 && jatekosmasodik == 11)
                 {
                     osszegjatekos = 12;
                 }
 
-                if (osztoelso == 14 && osztomasodik == 14)
+                if (osztoelso == 11 && osztomasodik == 11)
                 {
                     osszegoszto = 12;
                 }
@@ -227,6 +227,7 @@ int main()
                             nemeleg = false;
                             fusson = false;
                         }
+                        
                         break;
                     case '\n':
                         break;
@@ -235,13 +236,13 @@ int main()
                         break;
                     }
                 }
+                pakli_felszabadit(eleje);
                 dontes(&eredmeny, osszegjatekos, osszegoszto);
                 if (osszegjatekos > osszegoszto)
                     egyenleg = egyenleg + tetek;
                 else if (osszegjatekos < osszegoszto)
                     egyenleg = egyenleg - tetek;
                     
-                pakli_felszabadit(eleje);
                 korutaniszoveg(osszegjatekos, osszegoszto);
 
                 printf("\nNyert:%d Döntetlen:%d Vesztett:%d\nEgyenleg:%d\n\n", eredmeny.nyert, eredmeny.dontetlen, eredmeny.vesztett, egyenleg);
