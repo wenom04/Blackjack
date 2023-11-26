@@ -227,7 +227,11 @@ int main()
                             nemeleg = false;
                             fusson = false;
                         }
+<<<<<<< HEAD
                         osztovanasz = false;
+=======
+                        
+>>>>>>> 8bb28f54d981183bae4c8f9cce447addf3a9206c
                         break;
                     case '\n':
                         break;
@@ -236,13 +240,13 @@ int main()
                         break;
                     }
                 }
+                pakli_felszabadit(eleje);
                 dontes(&eredmeny, osszegjatekos, osszegoszto);
                 if (osszegjatekos > osszegoszto)
                     egyenleg = egyenleg + tetek;
                 else if (osszegjatekos < osszegoszto)
                     egyenleg = egyenleg - tetek;
                     
-                pakli_felszabadit(eleje);
                 korutaniszoveg(osszegjatekos, osszegoszto);
 
                 printf("\nNyert:%d Döntetlen:%d Vesztett:%d\nEgyenleg:%d\n\n", eredmeny.nyert, eredmeny.dontetlen, eredmeny.vesztett, egyenleg);
