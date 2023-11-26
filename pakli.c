@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <time.h>
-#include "fuggvenyek.h"
+#include "jatek.h"
 #include "pakli.h"
 #include "debugmalloc.h"
 
@@ -71,7 +71,7 @@ kartya *paklitletrehoz()
             kartya *uj = letrehoz(ertekek[j], szinek[i]);
             if (legutobbi == NULL)
             {
-                // Mivel a pakli üfres, ezért az első pakli lesz az eleje
+                // Mivel a pakli üres, ezért az első pakli lesz az eleje
                 legutobbi = uj;
                 pakli = uj;
             }
@@ -100,7 +100,7 @@ kartya *kartyaosztas(kartya *eleje, int db)
 
 void osztokartyakiirasa(kartya *mit, char *ertekbetuvel, int hanyadik)
 {
-    if (mit->ertek < 11)
+    if (mit->ertek <= 10)
         printf("Az osztó %d. lapja: %s %d\n", hanyadik, mit->szin, mit->ertek);
     else
         printf("Az osztó %d. lapja: %s %s\n", hanyadik, mit->szin, ertekbetuvel);
@@ -108,7 +108,7 @@ void osztokartyakiirasa(kartya *mit, char *ertekbetuvel, int hanyadik)
 
 void jatekoskartyakiirasa(kartya *mit, char *ertekbetuvel, int hanyadik)
 {
-    if (mit->ertek < 11)
+    if (mit->ertek <= 10)
         printf("A játékos %d. lapja: %s %d\n", hanyadik, mit->szin, mit->ertek);
     else
         printf("A játékos %d. lapja: %s %s\n", hanyadik, mit->szin, ertekbetuvel);

@@ -1,5 +1,6 @@
 #ifndef FAJLKEZELES_H
 #define FAJLKEZELE_H 
+
 /// @brief Kiírja a játékszabályt
 void jatekszabaly();
 

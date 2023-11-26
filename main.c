@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include "debugmalloc.h"
-#include "fuggvenyek.h"
+#include "jatek.h"
 #include "fajlkezeles.h"
 #include "pakli.h"
 
@@ -22,7 +22,7 @@ int main()
     {
         char valasz;
         scanf("%c", &valasz);
-        jatekkezdete(valasz, &fut);
+        fut = jatekkezdete(valasz);
     }
 
     bool fut1 = true;
@@ -48,7 +48,7 @@ int main()
         case 'K':
         case 'k':
             eleje = paklitletrehoz();
-            printf("\nA játék újra elkezdődött!\n");
+            printf("\nA játék elkezdődött!\n");
             printf("Most rakd meg a tétedet. Figyelem! A tétnek minimum 50 coinnak kell lennie!\nAz egyenleged: %d\n", egyenleg);
             scanf("%d", &tetek);
             if (tetek >= 50 && tetek <= egyenleg)
@@ -117,12 +117,12 @@ int main()
                 int osszegoszto = osztoelso + osztomasodik;
                 int osszegjatekos = jatekoselso + jatekosmasodik;
 
-                if (jatekoselso == 14 && jatekosmasodik == 14)
+                if (jatekoselso == 11 && jatekosmasodik == 11)
                 {
                     osszegjatekos = 12;
                 }
 
-                if (osztoelso == 14 && osztomasodik == 14)
+                if (osztoelso == 11 && osztomasodik == 11)
                 {
                     osszegoszto = 12;
                 }
@@ -208,7 +208,7 @@ int main()
                                 osztovanasz = false;
                             }
 
-                            if (osszegoszto >= 17)
+                            if (osszegoszto >= 17 && !osztovanasz)
                             {
                                 printf("Az összege: %d\n", osszegoszto);
                                 nemeleg = false;
@@ -227,6 +227,7 @@ int main()
                             nemeleg = false;
                             fusson = false;
                         }
+                        osztovanasz = false;
                         break;
                     case '\n':
                         break;

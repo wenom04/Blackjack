@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "debugmalloc.h"
-#include "fuggvenyek.h"
+#include "jatek.h"
 #include "fajlkezeles.h"
 
 void dontes(eredmenyek *eredmeny, int osszegjatekos, int osszegoszto)
@@ -71,7 +71,7 @@ void korutaniszoveg(int osszegjatekos, int osszegoszto)
         printf("\nA kör döntetlennel zárult, de jobb, mintha veszítettél volna!\n");
 }
 
-void jatekkezdete(char valasz, bool *fut)
+bool jatekkezdete(char valasz)
 {
     switch (valasz)
     {
@@ -84,7 +84,7 @@ void jatekkezdete(char valasz, bool *fut)
     case 'j':
         printf("\nA játék elkezdődött!\n");
         printf("Visszaakarod állítani az előző állást? Ha igen, nyomd meg a [V] betűt és üss egy entert, ha nem, nyomd meg a [N] betűt és üss egy entert!\n");
-        *fut = false;
+        return false;
         break;
     case '\n':
         break;
@@ -92,6 +92,8 @@ void jatekkezdete(char valasz, bool *fut)
         nemmegfelelo();
         break;
     }
+    
+    return true;
 }
 
 bool visszaallitas(char valasz, bool *fut, int *nyert, int *dontetlen, int *vesztett, int *egyenleg)
