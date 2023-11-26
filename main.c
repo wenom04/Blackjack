@@ -227,11 +227,7 @@ int main()
                             nemeleg = false;
                             fusson = false;
                         }
-<<<<<<< HEAD
                         osztovanasz = false;
-=======
-                        
->>>>>>> 8bb28f54d981183bae4c8f9cce447addf3a9206c
                         break;
                     case '\n':
                         break;

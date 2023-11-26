@@ -103,7 +103,7 @@ void osztokartyakiirasa(kartya *mit, char *ertekbetuvel, int hanyadik)
     if (mit->ertek <= 10)
         printf("Az osztó %d. lapja: %s %d\n", hanyadik, mit->szin, mit->ertek);
     else
-        printf("Az osztó %d. lapja: %s %s %d\n", hanyadik, mit->szin, ertekbetuvel, mit->ertek);
+        printf("Az osztó %d. lapja: %s %s %d\n", hanyadik, mit->szin, ertekbetuvel);
 }
 
 void jatekoskartyakiirasa(kartya *mit, char *ertekbetuvel, int hanyadik)
@@ -111,5 +111,5 @@ void jatekoskartyakiirasa(kartya *mit, char *ertekbetuvel, int hanyadik)
     if (mit->ertek <= 10)
         printf("A játékos %d. lapja: %s %d\n", hanyadik, mit->szin, mit->ertek);
     else
-        printf("A játékos %d. lapja: %s %s %d\n", hanyadik, mit->szin, ertekbetuvel, mit->ertek);
+        printf("A játékos %d. lapja: %s %s %d\n", hanyadik, mit->szin, ertekbetuvel);
 }
